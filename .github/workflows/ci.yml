@@ -36,9 +36,9 @@ jobs:
           push: true
           # 레포 이름은 Docker Hub 아이디와 프로젝트 명 조합
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:latest
-          # 레이어 캐싱을 통해 이후 빌드 속도 획기적 단축
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:buildcache,mode=max
+          # 레이어 캐싱을 통해 이후 빌드 속도 획기적 단축 (GitHub Actions 자체 캐시 엔진 사용)
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       # 5. 로컬 워크스페이스(Self-hosted Runner)에 컨테이너 자동 배포 (Continuous Deployment)
       - name: Deploy to Local Mac Server
