@@ -6,7 +6,6 @@ FROM python:3.9-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV DEEPFACE_HOME=/app
-ENV TF_USE_LEGACY_KERAS=1
 
 # 3. 시스템 패키지 설치 (OpenCV 구동 등) 및 캐시 삭제
 # 여러 RUN 명령어를 하나로 묶어 레이어 수 최소화
