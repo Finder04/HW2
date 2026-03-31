@@ -8,8 +8,8 @@ on:
 
 jobs:
   docker-build-push:
-    # ubuntu-latest 대신 로컬에 설치된 self-hosted runner가 작업을 가져갈 수 있도록 변경합니다.
-    runs-on: self-hosted
+    # macOS M칩 환경의 label(태그)을 정확히 명시하도록 수정합니다.
+    runs-on: [self-hosted, macOS, ARM64]
 
     steps:
       # 1. 레포지토리 체크아웃
