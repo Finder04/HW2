@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.responses import HTMLResponse
 import shutil
 import os
 import uuid
@@ -15,9 +16,11 @@ UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 if not os.path.exists(UPLOAD_DIR):
     os.makedirs(UPLOAD_DIR)
 
-@app.get("/")
-def read_root():
-    return {"status": "ok", "message": "Age Prediction API is successfully running"}
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    html_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+    with open(html_file, "r", encoding="utf-8") as f:
+        return f.read()
 
 @app.post("/predict/age")
 async def predict_age_endpoint(file: UploadFile = File(...)):
