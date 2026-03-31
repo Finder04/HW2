@@ -2,4 +2,5 @@ fastapi==0.103.2
 uvicorn[standard]==0.23.2
 python-multipart==0.0.6
 deepface>=0.0.93
+tf-keras
 opencv-python-headless==4.8.1.78
