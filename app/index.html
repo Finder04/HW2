@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Age Predictor</title>
+    <title>AI Age & Gender Predictor</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -188,8 +188,8 @@
 <body>
 
     <div class="container">
-        <h1>AI Age Predictor</h1>
-        <p class="subtitle">Upload a face, discover the age magic.</p>
+        <h1>AI Identity Predictor</h1>
+        <p class="subtitle">Upload a face, discover the magic.</p>
 
         <label for="image-upload" class="upload-area" id="drop-zone">
             <span class="upload-icon">📸</span>
@@ -207,7 +207,7 @@
         </button>
 
         <div id="result-box" class="result-box">
-            <h2><span id="age-result">25</span> YO</h2>
+            <h2><span id="age-result">25</span> YO, <span id="gender-result">Man</span></h2>
             <p>Estimated by DeepFace AI</p>
         </div>
     </div>
@@ -221,6 +221,7 @@
         const uploadText = document.getElementById('upload-text');
         const resultBox = document.getElementById('result-box');
         const ageResult = document.getElementById('age-result');
+        const genderResult = document.getElementById('gender-result');
 
         let selectedFile = null;
 
@@ -285,7 +286,7 @@
             formData.append('file', selectedFile);
 
             try {
-                const response = await fetch('/predict/age', {
+                const response = await fetch('/predict/attributes', {
                     method: 'POST',
                     body: formData
                 });
@@ -298,6 +299,7 @@
 
                 if (data.prediction && data.prediction.length > 0) {
                     ageResult.innerText = data.prediction[0].age;
+                    genderResult.innerText = data.prediction[0].gender;
                     resultBox.style.display = 'block';
                     
                     // Reset upload area so user can upload again easily

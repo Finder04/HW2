@@ -21,7 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 5. (최적화✨) 모델 가중치 사전 다운로드
 # 빌드 시점에 모델 가중치를 미리 받아두어 서버 리부트/시작 시간을 비약적으로 단축
-RUN python -c "from deepface import DeepFace; DeepFace.build_model('Age')" || echo "사전 다운로드 무시"
+RUN python -c "from deepface import DeepFace; DeepFace.build_model('Age'); DeepFace.build_model('Gender')" || echo "사전 다운로드 무시"
 
 # 6. 애플리케이션 코드 복사
 COPY ./app ./app
