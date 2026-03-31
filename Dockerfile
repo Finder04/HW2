@@ -9,8 +9,9 @@ ENV DEEPFACE_HOME=/app
 
 # 3. 시스템 패키지 설치 (OpenCV 구동 등) 및 캐시 삭제
 # 여러 RUN 명령어를 하나로 묶어 레이어 수 최소화
+# 최신 Debian(Bookworm) 기반 이미지 지원을 위해 libgl1-mesa-glx 대신 libgl1 사용
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
