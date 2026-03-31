@@ -39,3 +39,17 @@ jobs:
           # 레이어 캐싱을 통해 이후 빌드 속도 획기적 단축
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:buildcache,mode=max
+
+      # 5. 로컬 워크스페이스(Self-hosted Runner)에 컨테이너 자동 배포 (Continuous Deployment)
+      - name: Deploy to Local Mac Server
+        run: |
+          # 1. 방금 Docker Hub에 Push된 최신 이미지를 가져옵니다.
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:latest
+          
+          # 2. 현재 실행 중인 동일한 이름의 컨테이너가 있다면 중지 및 삭제합니다.
+          # (처음 실행 시 에러가 나면 무시하도록 || true 처리)
+          docker stop age-predictor || true
+          docker rm age-predictor || true
+          
+          # 3. 최신 이미지로 백그라운드(-d)에서 API 서버를 재실행합니다.
+          docker run -d -p 8000:8000 --name age-predictor ${{ secrets.DOCKERHUB_USERNAME }}/age-predictor-api:latest
